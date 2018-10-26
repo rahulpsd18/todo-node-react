@@ -1,7 +1,7 @@
 import * as jwt from 'jsonwebtoken';
 import { Router, Response, Request } from 'express';
 
-import { User } from '../models/User';
+import { User } from '../models';
 import { isAuthenticated } from '../config/passport';
 
 const router = Router();
@@ -12,9 +12,9 @@ router.get('/user', isAuthenticated(), (req: Request, res: Response) => {
 });
 
 router.post('/signup', async (req: Request, res: Response) => {
-    const { email, password, firstName, lastName } = req.body;
-
+    const { email, password } = req.body;
     const user = await User.findOne({ email: email.toLowerCase() });
+
     if (user) {
         res.status(400).json({ message: `Email already exists.` });
         return;
@@ -22,7 +22,7 @@ router.post('/signup', async (req: Request, res: Response) => {
 
     if (email && password) {
         try {
-            await User.create({ email, password, profile: { firstName, lastName } });
+            await User.create(req.body);
             res.json({ message: 'User created successfully.' });
         } catch (error) {
             res.status(500).json({ message: error.message });
@@ -34,6 +34,7 @@ router.post('/signup', async (req: Request, res: Response) => {
 
 router.post('/login', async (req: Request, res: Response) => {
     const { email, password } = req.body;
+
     if (email && password) {
         const user = await User.findOne({ email: email.toLowerCase() }).select('+password').exec();
         if (!user) {
@@ -46,6 +47,7 @@ router.post('/login', async (req: Request, res: Response) => {
             const payload = { id: user.id };
             const token = jwt.sign(payload, process.env.JWT_SECRET as string, { expiresIn: '1d' });
             res.json({ token: token });
+            return;
         }
 
         res.status(401).json({ message: 'Incorrect password. Please try again.' });

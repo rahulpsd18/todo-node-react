@@ -5,25 +5,23 @@ import { ObjectId } from 'bson';
 interface IUserAttributes {
     email: string;
     password: string;
-    profile: {
-        firstName?: string,
-        lastName?: string,
-    };
+    firstName?: string;
+    lastName?: string;
 }
 
 // Ref: static and member model methods https://stackoverflow.com/a/45675548/1297190
-interface IUser extends IUserAttributes, mongoose.Document {
+export interface IUser extends IUserAttributes, mongoose.Document {
     id: ObjectId;
 
     // instance methods go here. Only the signature
     comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
-interface IUserStatics extends mongoose.Model<IUser> {
+export interface IUserStatics extends mongoose.Model<IUser> {
     // static methods go here. Only the signature
 }
 
-const userSchema = new mongoose.Schema({
+export const userSchema = new mongoose.Schema({
     email: {
         type: String,
         unique: true,
@@ -32,12 +30,10 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         select: false,
-        required: [true, 'Password is required.']
+        required: [true, 'Password is required.'],
     },
-    profile: {
-        firstName: String,
-        lastName: String,
-    }
+    firstName: String,
+    lastName: String,
 }, { timestamps: true });
 
 userSchema.pre('save', async function (this: IUser, next: mongoose.HookNextFunction) {
@@ -56,5 +52,3 @@ userSchema.methods.comparePassword = async function (candidatePassword: string) 
     const isMatch = await bcrypt.compare(candidatePassword, this.password);
     return isMatch;
 };
-
-export const User = mongoose.model<IUser, IUserStatics>('User', userSchema);

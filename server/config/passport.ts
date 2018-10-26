@@ -1,6 +1,6 @@
 import * as passport from 'passport';
 import { ExtractJwt, Strategy, VerifiedCallback, StrategyOptions } from 'passport-jwt';
-import { User } from '../models/User';
+import { User } from '../models';
 
 const params: StrategyOptions = {
     secretOrKey: process.env.JWT_SECRET,
@@ -12,7 +12,7 @@ const strategy = new Strategy(params, async (payload: any, done: VerifiedCallbac
     const user = await User.findById(payload.id);
 
     return user
-        ? done(null, { user })
+        ? done(null, user)
         : done(Error('No such user exists.'));
 });
 
