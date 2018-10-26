@@ -5,7 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon -e ts -w ./server -x 'ts-node ./server/index.ts'"
+    "start": "nodemon -e ts -w ./server -x 'ts-node ./server/index.ts'",
+    "lint": "tslint -c tslint.json -p tsconfig.json"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint",
+      "pre-push": "npm test"
+    }
   },
   "author": "Risabh Kumar",
   "license": "ISC",
@@ -17,8 +24,10 @@
     "@types/errorhandler": "0.0.32",
     "@types/express": "^4.16.0",
     "@types/node": "^10.12.0",
+    "husky": "^1.1.2",
     "nodemon": "^1.18.4",
     "ts-node": "^7.0.1",
+    "tslint": "^5.11.0",
     "typescript": "^3.1.3"
   }
 }
