@@ -9,7 +9,7 @@ A Todo app made with Express (and MongoDB)
 
 ## Todo
 
-- [ ] Add and configure Mongoose
+- [x] ~~Add and configure Mongoose~~
 - [ ] Design User Schema
 - [ ] Implement Auth Management
 - [ ] Implement User Management
