@@ -4,16 +4,21 @@
   "description": "An Express application with React-Redux as frontend",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon -e ts -w ./server -x 'ts-node ./server/index.ts'"
   },
   "author": "Risabh Kumar",
   "license": "ISC",
   "dependencies": {
+    "errorhandler": "^1.5.0",
     "express": "^4.16.4"
   },
   "devDependencies": {
+    "@types/errorhandler": "0.0.32",
     "@types/express": "^4.16.0",
     "@types/node": "^10.12.0",
+    "nodemon": "^1.18.4",
+    "ts-node": "^7.0.1",
     "typescript": "^3.1.3"
   }
 }

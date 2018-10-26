@@ -4,7 +4,7 @@
         "target": "es2018",
         "lib": ["es2018"],
         "moduleResolution": "node",
-        "rootDir": "./src/",
+        "rootDir": "./server/",
         "outDir": "dist",
         "sourceMap": true,
         "noImplicitAny": true,
