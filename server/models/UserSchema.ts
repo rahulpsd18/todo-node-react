@@ -1,17 +1,20 @@
 import * as bcrypt from 'bcrypt';
 import * as mongoose from 'mongoose';
 import { ObjectId } from 'bson';
+import { ITask } from './TaskSchema';
 
 interface IUserAttributes {
     email: string;
     password: string;
     firstName?: string;
     lastName?: string;
+    tasks: ObjectId[];
 }
 
 // Ref: static and member model methods https://stackoverflow.com/a/45675548/1297190
 export interface IUser extends IUserAttributes, mongoose.Document {
     id: ObjectId;
+    tasks: ObjectId[] & ITask[];
 
     // instance methods go here. Only the signature
     comparePassword(candidatePassword: string): Promise<boolean>;
@@ -34,6 +37,11 @@ export const userSchema = new mongoose.Schema({
     },
     firstName: String,
     lastName: String,
+    tasks: {
+        type: [mongoose.Schema.Types.ObjectId], // Ids of Tasks
+        default: [],
+        ref: 'Task'
+    },
 }, { timestamps: true });
 
 userSchema.pre('save', async function (this: IUser, next: mongoose.HookNextFunction) {
