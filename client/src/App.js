@@ -1,28 +1,34 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { NavBar } from './components/NavBar';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core';
+
 import './App.css';
 
+const theme = createMuiTheme({
+    palette: {
+         primary: {
+            light: '#B3E5FC',
+            main: '#FFFFFF',
+            dark: '#0288D1',
+         },
+         secondary: {
+            light: '#757575',
+            main: '#FF4081',
+         },
+       }
+     });
+
+
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Hey I'm <code>Risabh Kumar</code>.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+    render() {
+        return (
+            <MuiThemeProvider muiTheme={theme}>
+                <div className="App">
+                    <NavBar />
+                </div>
+            </MuiThemeProvider>
+        );
+    }
 }
 
 export default App;
