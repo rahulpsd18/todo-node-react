@@ -13,6 +13,7 @@
     "@material-ui/icons": "^3.0.1",
     "@reach/router": "^1.2.1",
     "axios": "^0.18.0",
+    "lodash.throttle": "^4.1.1",
     "react": "^16.6.0",
     "react-beautiful-dnd": "^9.0.2",
     "react-dom": "^16.6.0",
