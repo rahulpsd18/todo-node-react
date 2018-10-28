@@ -6,6 +6,7 @@ import router from './routes';
 
 type Request = express.Request;
 type Response = express.Response;
+type NextFunction = express.NextFunction;
 
 // Create Express server
 const app = express();
@@ -19,6 +20,13 @@ mongoose.set('useCreateIndex', true);  // Added to silence the deprecation warni
 
 // Express configuration
 app.set('port', process.env.PORT || 3000);
+
+// Enabled CORS
+app.use(function (req: Request, res: Response, next: NextFunction) {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+    next();
+});
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

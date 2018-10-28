@@ -1,32 +1,24 @@
 import React, { Component } from 'react';
+import { Router } from '@reach/router'
+import { Provider } from 'react-redux';
 import { NavBar } from './components/NavBar';
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core';
-
+import SignupPage from './containers/signup/SignupPage';
+import LoginPage from './containers/login/LoginPage';
+import { store } from './store';
 import './App.css';
-
-const theme = createMuiTheme({
-    palette: {
-         primary: {
-            light: '#B3E5FC',
-            main: '#FFFFFF',
-            dark: '#0288D1',
-         },
-         secondary: {
-            light: '#757575',
-            main: '#FF4081',
-         },
-       }
-     });
-
 
 class App extends Component {
     render() {
         return (
-            <MuiThemeProvider muiTheme={theme}>
+            <Provider store={store}>
                 <div className="App">
                     <NavBar />
+                    <Router>
+                        <SignupPage path="signup" />
+                        <LoginPage path="login" />
+                    </Router>
                 </div>
-            </MuiThemeProvider>
+            </Provider>
         );
     }
 }
