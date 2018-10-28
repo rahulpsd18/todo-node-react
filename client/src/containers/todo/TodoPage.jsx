@@ -1,11 +1,12 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { connect } from 'react-redux';
-import { getTasks, updateTasks } from '../../actions';
+import { getTasks, addTask, updateTasks } from '../../actions';
 import { TodoLane } from '../../components/TodoLane';
+import { TodoForm } from '../../components/TodoForm';
+import { ToastContainer, toast } from 'react-toastify';
+import { withStyles } from '@material-ui/core/styles';
 import { withAuthentication } from '../../withAuthentication';
-
 
 const reorder = (list, startIndex, endIndex) => {
     const result = Array.from(list);
@@ -14,25 +15,30 @@ const reorder = (list, startIndex, endIndex) => {
     result.forEach((res, index) => res.priority = index);
 
     return result;
-  };
+};
 
 
 class TodoPage extends React.Component {
 
     state = {
-        items: getItems(4),
+        items: getItems(6),
     };
 
-
     componentWillReceiveProps(props) {
-        this.state = {
+        this.setState({
             items: props.tasks,
-        };
+        });
+
+        props.error && this.notify(props.error);
     }
 
     componentWillMount() {
         this.props.getTasks(this.props.token);
     }
+
+    notify = (message) => toast.error(message, {
+        position: toast.POSITION.TOP_RIGHT
+    });
 
     onDragEnd = (result) => {
         if (!result.destination) {
@@ -44,7 +50,7 @@ class TodoPage extends React.Component {
             result.source.index,
             result.destination.index
         );
-        console.log(this.props.token);
+
         this.props.updateTasks(items, this.props.token);
 
         this.setState({
@@ -52,10 +58,17 @@ class TodoPage extends React.Component {
         });
     }
 
+    addTask = (data) => {
+        console.log(data, this.props.token);
+        this.props.addTask(data, this.props.token);
+    }
+
     render() {
         return (
             <DragDropContext onDragEnd={this.onDragEnd}>
                 <TodoLane items={this.state.items} />
+                <TodoForm onSubmit={this.addTask}/>
+                <ToastContainer />
             </DragDropContext>
         );
     }
@@ -66,12 +79,14 @@ const mapStateToProps = (state) => {
         user: state.loginReducer.user,
         token: state.loginReducer.token,
         tasks: state.tasksReducer.tasks,
+        error: state.tasksReducer.error,
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
         getTasks: (token) => dispatch(getTasks(token)),
+        addTask: (data, token) => dispatch(addTask(data, token)),
         updateTasks: (data, token) => dispatch(updateTasks(data, token)),
     }
 }

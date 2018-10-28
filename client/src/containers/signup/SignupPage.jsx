@@ -1,6 +1,7 @@
 import React from 'react';
 import purple from '@material-ui/core/colors/purple';
 import { navigate } from '@reach/router';
+import { ToastContainer, toast } from 'react-toastify';
 import { CircularProgress, withStyles, Snackbar } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { signup } from '../../actions';
@@ -15,35 +16,26 @@ const styles = theme => ({
 class SignupPage extends React.Component {
 
     componentDidUpdate() {
-        if (this.props.user) {
-            navigate('/');
-        }
+        this.props.user && navigate('/');
+        this.props.error && this.notify(this.props.error);
     }
 
-    render() {
-        const { updateStore, classes, loading, error } = this.props;
+    notify = (message) => toast.error(message, {
+        position: toast.POSITION.TOP_RIGHT
+    });
 
-        if (loading) {
-            return <CircularProgress className={classes.progress} style={{ color: purple[500] }} thickness={7} />;
-        }
+    render() {
+        const { signupUser, classes, loading, error } = this.props;
 
         return (
             < div className="container" >
                 <div className="row justify-content-center align-items-center">
                     <div className="col-md-8">
-                        <SignupForm signupUser={updateStore} />
+                        <SignupForm loading={loading} signupUser={signupUser} />
                     </div>
                 </div>
-                <Snackbar
-                    anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-                    open={error}
-                    autoHideDuration={1}
-                    ContentProps={{
-                        'aria-describedby': 'message-id',
-                    }}
-                    message={<span id="message-id">{error}</span>}
-                />;
-                </div >
+                <ToastContainer />
+            </div >
         );
     }
 }
@@ -57,7 +49,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        updateStore: (user) => dispatch(signup(user)),
+        signupUser: (user) => dispatch(signup(user)),
     }
 }
 

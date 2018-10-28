@@ -6,6 +6,7 @@ import { TodoCard } from './TodoCard';
 const styles = theme => ({
   root: {
     flexGrow: 1,
+    position: 'relative',
   },
   lane: {
     flexGrow: 1,
@@ -27,7 +28,7 @@ const TodoLaneImpl = (props) => {
               {
                 props.items.length > 0
                   ? props.items.map((item, index) => (
-                    <Grid item xs={12} index={item._id}>
+                    <Grid item xs={12} index={item._id} key={item._id}>
                       <TodoCard item={item} index={index} />
                     </Grid>
                   ))
