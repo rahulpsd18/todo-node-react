@@ -62,11 +62,11 @@ router.put('/', async (req: Request, res: Response, next: NextFunction) => {
 // delete task(s)
 router.delete('/', async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const taskIds = req.body.tasks;
-        const tasks = await Task.deleteMany({ _id: { $in: taskIds } });
+        const taskIds = req.body;
+        await Task.deleteMany({ _id: { $in: taskIds } });
         await User.findOneAndUpdate({ _id: req.user.id }, { $pull: { tasks: { $in: taskIds } } });
 
-        res.json(tasks);
+        res.json({message: 'Task(s) deleted successfully.'});
     } catch (err) {
         next(err);
     }

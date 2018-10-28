@@ -1,12 +1,11 @@
 import React from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
 import { connect } from 'react-redux';
-import { getTasks, addTask, updateTasks } from '../../actions';
+import { ToastContainer, toast } from 'react-toastify';
 import { TodoLane } from '../../components/TodoLane';
 import { TodoForm } from '../../components/TodoForm';
-import { ToastContainer, toast } from 'react-toastify';
-import { withStyles } from '@material-ui/core/styles';
 import { withAuthentication } from '../../withAuthentication';
+import { getTasks, addTask, updateTask, updateTasks, deleteTasks } from '../../actions';
 
 const reorder = (list, startIndex, endIndex) => {
     const result = Array.from(list);
@@ -63,10 +62,20 @@ class TodoPage extends React.Component {
         this.props.addTask(data, this.props.token);
     }
 
+    deleteTask = (tasks) => {
+        this.props.deleteTasks(tasks);
+        this.props.getTasks();
+    }
+
+    updateTask = (id, task) => {
+        this.props.updateTask(id, task);
+        this.props.getTasks();
+    }
+
     render() {
         return (
             <DragDropContext onDragEnd={this.onDragEnd}>
-                <TodoLane items={this.state.items} />
+                <TodoLane onDelete={this.deleteTask} onEdit={this.updateTask} items={this.state.items} />
                 <TodoForm onSubmit={this.addTask}/>
                 <ToastContainer />
             </DragDropContext>
@@ -85,9 +94,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        getTasks: (token) => dispatch(getTasks(token)),
-        addTask: (data, token) => dispatch(addTask(data, token)),
-        updateTasks: (data, token) => dispatch(updateTasks(data, token)),
+        getTasks: () => dispatch(getTasks()),
+        addTask: (data) => dispatch(addTask(data)),
+        updateTask: (id, data) => dispatch(updateTask(id, data)),
+        updateTasks: (data) => dispatch(updateTasks(data)),
+        deleteTasks: (data) => dispatch(deleteTasks(data)),
     }
 }
 

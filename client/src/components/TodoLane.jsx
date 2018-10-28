@@ -29,7 +29,7 @@ const TodoLaneImpl = (props) => {
                 props.items.length > 0
                   ? props.items.map((item, index) => (
                     <Grid item xs={12} index={item._id} key={item._id}>
-                      <TodoCard item={item} index={index} />
+                      <TodoCard onEdit={props.onEdit} onDelete={props.onDelete} item={item} index={index} />
                     </Grid>
                   ))
                   : null

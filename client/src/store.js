@@ -10,8 +10,8 @@ export const store = createStore(
     rootReducer,
     persistedStore,
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__(applyMiddleware(promise())),
-);
+    );
 
-store.subscribe(throttle(() => {
-    saveState(store.getState());
+    store.subscribe(throttle(() => {
+        saveState(store.getState());
 }), 1000);

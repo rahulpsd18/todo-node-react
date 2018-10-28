@@ -1,3 +1,4 @@
+import * as path from 'path';
 import * as bodyParser from 'body-parser';
 import * as express from 'express';
 import * as passport from 'passport';
@@ -31,7 +32,7 @@ app.use(function (req: Request, res: Response, next: NextFunction) {
 // Allow all options request to pass
 app.options('/*', function (req: Request, res: Response, next: NextFunction) {
     res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,PATCH,DELETE,OPTIONS');
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
     res.sendStatus(200);
 });
@@ -40,5 +41,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(passport.initialize());
 app.use(router);
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('/', function (req: Request, res: Response) {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
 export default app;

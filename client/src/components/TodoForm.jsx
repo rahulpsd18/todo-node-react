@@ -38,7 +38,7 @@ class TodoFormImpl extends React.Component {
 
     componentWillReceiveProps(props) {
         console.log('New props received', props);
-        this.setState({ open: false });
+        this.setState({ ...props });
     }
 
     toggleModal = () => {
@@ -53,24 +53,27 @@ class TodoFormImpl extends React.Component {
 
     handleSubmit = () => {
         this.props.onSubmit(this.state);
+        this.setState({ open: false });
     };
 
     render() {
-        const { classes } = this.props;
+        const { classes, isEditMode } = this.props;
 
         return (
             <div>
-                <Button variant="fab" color="primary" aria-label="Add" className={classes.button} onClick={this.toggleModal}>
-                    <AddIcon />
-                </Button>
+                {
+                    !isEditMode && <Button variant="fab" color="primary" aria-label="Add" className={classes.button} onClick={this.toggleModal}>
+                        <AddIcon />
+                    </Button>
+                }
                 <Dialog
                     open={this.state.open}
                     onClose={this.toggleModal}
                     aria-labelledby="form-dialog-title"
                 >
                     <DialogTitle>
-                        Add an agenda
-                        </DialogTitle>
+                        {isEditMode ? 'Edit the agenda' : 'Add an agenda'}
+                    </DialogTitle>
                     <DialogContent>
                         <form className={classes.form}>
                             <FormControl margin="normal" fullWidth required>
@@ -88,7 +91,7 @@ class TodoFormImpl extends React.Component {
                                     onChange={this.handleChange}
                                     margin="normal"
                                 />
-                                <Grid container spacing={16} style={{marginTop: 10}}>
+                                <Grid container spacing={16} style={{ marginTop: 10 }}>
                                     <Grid item xs={12} sm={6}>
                                         <TextField
                                             id="dueDate"
@@ -124,11 +127,11 @@ class TodoFormImpl extends React.Component {
                         <Button onClick={this.toggleModal} color="primary">
                             Cancel
                         </Button>
-                        <Button onClick={() => this.setState({...initialState, open: true})} color="primary">
+                        <Button onClick={() => this.setState({ ...initialState, open: true })} color="primary">
                             Clear
                         </Button>
                         <Button type="submit" onClick={this.handleSubmit} color="primary">
-                            Add
+                            {isEditMode ? 'Update' : 'Add'}
                         </Button>
                     </DialogActions>
                 </Dialog>

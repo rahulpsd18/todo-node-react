@@ -5,9 +5,15 @@ import {
     ADD_TASK_PENDING,
     ADD_TASK_FULFILLED,
     ADD_TASK_REJECTED,
+    UPDATE_TASK_PENDING,
+    UPDATE_TASK_REJECTED,
+    UPDATE_TASK_FULFILLED,
     UPDATE_TASKS_PENDING,
     UPDATE_TASKS_REJECTED,
     UPDATE_TASKS_FULFILLED,
+    DELETE_TASKS_PENDING,
+    DELETE_TASKS_REJECTED,
+    DELETE_TASKS_FULFILLED,
 } from '../actions';
 
 const initialState = {
@@ -32,11 +38,25 @@ export const tasksReducer = (state = initialState, action) => {
         case ADD_TASK_REJECTED:
             return { ...state, loading: false, error: action.payload.response.data.message };
 
+        case UPDATE_TASK_PENDING:
+            return { ...state, loading: true, error: null };
+        case UPDATE_TASK_FULFILLED:
+            return { ...state, loading: false, error: null };
+        case UPDATE_TASK_REJECTED:
+            return { ...state, loading: false, error: action.payload.response.data.message };
+
         case UPDATE_TASKS_PENDING:
             return { ...state, loading: true, error: null };
         case UPDATE_TASKS_FULFILLED:
             return { ...state, loading: false, error: null, tasks: action.payload.data };
         case UPDATE_TASKS_REJECTED:
+            return { ...state, loading: false, error: action.payload.response.data.message };
+
+        case DELETE_TASKS_PENDING:
+            return { ...state, loading: true, error: null };
+        case DELETE_TASKS_FULFILLED:
+            return { ...state, loading: false, error: null };
+        case DELETE_TASKS_REJECTED:
             return { ...state, loading: false, error: action.payload.response.data.message };
 
         default:
