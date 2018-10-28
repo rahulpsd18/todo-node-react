@@ -4,7 +4,7 @@
   "description": "An Express server",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon -e ts -w ./server -x 'ts-node ./index.ts'",
+    "start": "nodemon -e ts -w ./ -x 'ts-node ./index.ts'",
     "lint": "tslint -c tslint.json -p tsconfig.json"
   },
   "dependencies": {
