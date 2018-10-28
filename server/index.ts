@@ -1,11 +1,14 @@
-import * as errorHandler from 'errorhandler';
-
 import app from './app';
+import { Request, Response, NextFunction } from 'express';
 
-/**
- * Error Handler. Provides full stack - remove for production
- */
-app.use(errorHandler());
+app.use(function (err: Error & { status: number }, req: Request, res: Response, next: NextFunction) {
+    if (res.headersSent) {
+        return next(err);
+    }
+
+    return res.status(err.status || 500).json({ message: err.message });
+});
+
 
 /**
  * Start Express server.

@@ -41,10 +41,4 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(passport.initialize());
 app.use(router);
 
-// ping
-app.get('/ping', (req: Request, res: Response) => {
-    console.log(`Ping received successfully at ${new Date()}`);
-    res.send('Pong');
-});
-
 export default app;
