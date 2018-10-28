@@ -6,7 +6,7 @@ const router = Router();
 
 // list tasks
 router.get('/', async (req: Request, res: Response) => {
-    const tasks = await Task.find({});
+    const tasks = await Task.find({ user: req.user.id }).sort('priority');
 
     res.json(tasks);
 });
@@ -31,6 +31,17 @@ router.patch('/:taskId', async (req: Request, res: Response) => {
     const task = await Task.findByIdAndUpdate(req.params.taskId, req.body, { new: true });
 
     res.json(task);
+});
+
+// replace tasks
+router.put('/', async (req: Request, res: Response) => {
+    for (let task of req.body.tasks) {
+        await Task.replaceOne({ _id: task._id }, task);
+    }
+
+    const tasks = await Task.find({ user: req.user.id }).sort('priority');
+
+    res.json(tasks);
 });
 
 // delete task(s)

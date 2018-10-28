@@ -46,8 +46,11 @@ router.post('/login', async (req: Request, res: Response) => {
         if (passwordMatch) {
             const payload = { id: user.id };
             const token = jwt.sign(payload, process.env.JWT_SECRET as string, { expiresIn: '1d' });
-            delete user.password;
-            res.json({ token: token, user});
+
+            const userObj = user.toObject();
+            delete userObj.password;
+
+            res.json({ token: token, user: userObj});
             return;
         }
 

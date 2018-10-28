@@ -8,13 +8,7 @@ interface ITaskAttributes {
     description?: string;
     dueDate?: Date;
     user: ObjectId;
-    priority: Priority;
-}
-
-export enum Priority {
-    HIGH = 'HIGH',
-    MEDIUM = 'MEDIUM',
-    LOW = 'LOW',
+    priority: number;
 }
 
 // Ref: static and member model methods https://stackoverflow.com/a/45675548/1297190
@@ -42,8 +36,7 @@ export const taskSchema = new mongoose.Schema({
         ref: 'User'
     },
     priority: {
-        type: String,
-        enum: Object.keys(Priority),
-        default: Priority.MEDIUM
+        type: Number,
+        default: 0
     },
 }, { timestamps: true });
