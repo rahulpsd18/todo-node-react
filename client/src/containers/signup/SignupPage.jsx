@@ -1,9 +1,9 @@
 import React from 'react';
-import purple from '@material-ui/core/colors/purple';
 import { navigate } from '@reach/router';
 import { ToastContainer, toast } from 'react-toastify';
-import { CircularProgress, withStyles, Snackbar } from '@material-ui/core';
+import { withStyles } from '@material-ui/core';
 import { connect } from 'react-redux';
+
 import { signup } from '../../actions';
 import SignupForm from './SignupForm';
 
@@ -16,22 +16,30 @@ const styles = theme => ({
 class SignupPage extends React.Component {
 
     componentDidUpdate() {
-        this.props.user && navigate('/');
-        this.props.error && this.notify(this.props.error);
+        this.props.error && this.notify(this.props.error, 'error');
+        if (this.props.message) {
+            this.notify(this.props.message, 'success');
+            navigate('/login');
+        }
     }
 
-    notify = (message) => toast.error(message, {
-        position: toast.POSITION.TOP_RIGHT
+    notify = (message, type) => toast(message, {
+        position: toast.POSITION.TOP_RIGHT,
+        type
     });
 
+    handleSignup = (data) => {
+        this.props.signupUser(data);
+    }
+
     render() {
-        const { signupUser, classes, loading, error } = this.props;
+        const { loading } = this.props;
 
         return (
             < div className="container" >
                 <div className="row justify-content-center align-items-center">
                     <div className="col-md-8">
-                        <SignupForm loading={loading} signupUser={signupUser} />
+                        <SignupForm loading={loading} signupUser={this.handleSignup} />
                     </div>
                 </div>
                 <ToastContainer />

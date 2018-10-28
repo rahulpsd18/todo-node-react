@@ -1,9 +1,10 @@
 import React from 'react';
 import { DragDropContext } from 'react-beautiful-dnd';
-import { connect } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
-import { TodoLane } from '../../components/TodoLane';
-import { TodoForm } from '../../components/TodoForm';
+import { connect } from 'react-redux';
+
+import TodoLane from '../../components/TodoLane';
+import TodoForm from '../../components/TodoForm';
 import { withAuthentication } from '../../withAuthentication';
 import { getTasks, addTask, updateTask, updateTasks, deleteTasks } from '../../actions';
 
@@ -15,7 +16,6 @@ const reorder = (list, startIndex, endIndex) => {
 
     return result;
 };
-
 
 class TodoPage extends React.Component {
 

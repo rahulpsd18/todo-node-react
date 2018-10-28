@@ -1,7 +1,7 @@
 import React from 'react';
 import { Paper, Grid, withStyles } from '@material-ui/core';
 import { Droppable } from 'react-beautiful-dnd';
-import { TodoCard } from './TodoCard';
+import TodoCard from './TodoCard';
 
 const styles = theme => ({
   root: {
@@ -15,7 +15,7 @@ const styles = theme => ({
   },
 });
 
-const TodoLaneImpl = (props) => {
+const TodoLane = (props) => {
   const { classes } = props;
 
   return (
@@ -43,4 +43,4 @@ const TodoLaneImpl = (props) => {
   );
 }
 
-export const TodoLane = withStyles(styles)(TodoLaneImpl);
+export default withStyles(styles)(TodoLane);

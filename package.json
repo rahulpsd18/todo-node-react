@@ -5,8 +5,13 @@
     "main": "index.js",
     "scripts": {
         "preinstall": "cd ./server && npm i",
-        "postinstall": "cd ./client && npm i"
+        "postinstall": "cd ./client && npm i",
+        "build": "cd ./client && npm run build",
+        "start": "npm run build && cd ./server && npm start"
     },
     "author": "Risabh Kumar",
-    "license": "ISC"
+    "license": "ISC",
+    "engines": {
+        "node": "8.11.2"
+    }
 }

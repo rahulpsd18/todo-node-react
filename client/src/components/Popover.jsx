@@ -9,6 +9,7 @@ const styles = theme => ({
         margin: theme.spacing.unit * 2,
     },
 });
+
 class PopoverImpl extends React.Component {
     state = {
         anchorEl: null,

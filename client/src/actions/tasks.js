@@ -26,37 +26,47 @@ export const DELETE_TASKS_PENDING = 'containers/tasks/DELETE_TASKS_PENDING';
 export const DELETE_TASKS_REJECTED = 'containers/tasks/DELETE_TASKS_REJECTED';
 export const DELETE_TASKS_FULFILLED = 'containers/tasks/DELETE_TASKS_FULFILLED';
 
-const persistedState = loadState();
-
-if (persistedState) {
-    axios.defaults.headers.common['Authorization'] = `Bearer ${loadState().loginReducer.token}`;
-}
-
 export const addTask = (data) => {
     return {
         type: ADD_TASK,
-        payload: axios.post('http://localhost:3000/task/', data)
+        payload: axios.post('http://localhost:3000/task/', data, {
+            headers: {
+                Authorization: `Bearer ${loadState().loginReducer.token}`
+            }
+        })
     }
 };
 
 export const updateTask = (id, data) => {
     return {
         type: UPDATE_TASK,
-        payload: axios.patch(`http://localhost:3000/task/${id}`, data)
+        payload: axios.patch(`http://localhost:3000/task/${id}`, data, {
+            headers: {
+                Authorization: `Bearer ${loadState().loginReducer.token}`
+            }
+        })
     }
 };
 
 export const updateTasks = (data) => {
     return {
         type: UPDATE_TASKS,
-        payload: axios.put('http://localhost:3000/task/', data)
+        payload: axios.put('http://localhost:3000/task/', data, {
+            headers: {
+                Authorization: `Bearer ${loadState().loginReducer.token}`
+            }
+        })
     }
 };
 
 export const deleteTasks = (data) => {
     return {
         type: DELETE_TASKS,
-        payload: axios.delete('http://localhost:3000/task/', {data})
+        payload: axios.delete('http://localhost:3000/task/', {data}, {
+            headers: {
+                Authorization: `Bearer ${loadState().loginReducer.token}`
+            }
+        })
     }
 };
 

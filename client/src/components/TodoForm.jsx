@@ -33,7 +33,7 @@ const initialState = {
     dueDate: new Date().toISOString().split('T')[0]
 };
 
-class TodoFormImpl extends React.Component {
+class TodoForm extends React.Component {
     state = initialState;
 
     componentWillReceiveProps(props) {
@@ -140,4 +140,4 @@ class TodoFormImpl extends React.Component {
     }
 }
 
-export const TodoForm = withStyles(styles)(TodoFormImpl);
+export default withStyles(styles)(TodoForm);

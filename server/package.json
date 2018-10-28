@@ -4,7 +4,7 @@
   "description": "An Express server",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon -e ts -w ./ -x 'JWT_SECRET=mysecret ts-node ./index.ts'",
+    "start": "env-cmd --fallback .env.sample sh -c 'ts-node ./index.ts'",
     "lint": "tslint -c tslint.json -p tsconfig.json"
   },
   "dependencies": {
@@ -24,6 +24,7 @@
     "@types/node": "^10.12.0",
     "@types/passport": "^0.4.6",
     "@types/passport-jwt": "^3.0.1",
+    "env-cmd": "^8.0.2",
     "nodemon": "^1.18.4",
     "ts-node": "^7.0.1",
     "tslint": "^5.11.0",

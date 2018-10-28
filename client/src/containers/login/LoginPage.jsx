@@ -2,8 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { ToastContainer, toast } from 'react-toastify';
 import { navigate } from '@reach/router';
-import { CircularProgress, withStyles, Snackbar } from '@material-ui/core';
-import purple from '@material-ui/core/colors/purple';
+import { withStyles } from '@material-ui/core';
+
 import LoginForm from './LoginForm';
 import { login } from '../../actions';
 

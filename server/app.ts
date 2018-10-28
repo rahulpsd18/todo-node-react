@@ -13,7 +13,7 @@ type NextFunction = express.NextFunction;
 const app = express();
 
 // MongoDB Connection
-mongoose.connect('mongodb://localhost:27017/todo', { useNewUrlParser: true })
+mongoose.connect(process.env.MONGO_URL as string, { useNewUrlParser: true })
     .then(() => { console.log('MongoDB connected.'); })
     .catch(err => { console.log('MongoDB connection error. Please make sure MongoDB is running. ' + err); });
 
@@ -44,7 +44,7 @@ app.use(router);
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', function (req: Request, res: Response) {
+app.get('/*', function (req: Request, res: Response) {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 

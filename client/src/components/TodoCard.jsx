@@ -10,7 +10,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Button from '@material-ui/core/Button';
 import AlertDialog from './AlertDialog';
 import Popover from './Popover';
-import { TodoForm } from './TodoForm';
+import TodoForm from './TodoForm';
 
 const styles = ({
     card: {
@@ -25,7 +25,7 @@ const styles = ({
 });
 
 
-class TodoCardImpl extends React.Component {
+class TodoCard extends React.Component {
 
     state = {
         delete: false,
@@ -84,7 +84,7 @@ class TodoCardImpl extends React.Component {
                                 title={item.title}
                                 titleTypographyProps={{ style: { fontSize: '1em' } }}
                                 subheaderTypographyProps={{ style: { fontSize: '0.8em' } }}
-                                subheader={new Date(item.createdAt).toDateString()}
+                                subheader={`${new Date(item.createdAt).toDateString()} - Priority ${item.priority}`}
                             />
                             <CardContent>
                                 <Typography component="p">
@@ -114,4 +114,4 @@ class TodoCardImpl extends React.Component {
     }
 }
 
-export const TodoCard = withStyles(styles)(TodoCardImpl);
+export default withStyles(styles)(TodoCard);
