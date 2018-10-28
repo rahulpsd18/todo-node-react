@@ -21,7 +21,7 @@ const reorder = (list, startIndex, endIndex) => {
 class TodoPage extends React.Component {
 
     state = {
-        items: getItems(6),
+        items: ''
     };
 
     componentWillReceiveProps(props) {
@@ -92,14 +92,3 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withAuthentication(TodoPage));
-
-// export default connect(mapStateToProps, mapDispatchToProps)(TodoPage);
-
-
-const getItems = count =>
-    Array.from({ length: count }, (v, k) => k).map(k => ({
-        _id: `item-${k}`,
-        createdAt: new Date(),
-        title: `My task to be done ${k}`,
-        description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit.'
-    }));

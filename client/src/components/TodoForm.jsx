@@ -73,7 +73,7 @@ class TodoFormImpl extends React.Component {
                         </DialogTitle>
                     <DialogContent>
                         <form className={classes.form}>
-                            <FormControl margin="normal" fullWidth>
+                            <FormControl margin="normal" fullWidth required>
                                 <InputLabel htmlFor="title">Title</InputLabel>
                                 <Input value={this.state.title} id="title" name="title" onChange={this.handleChange} autoFocus />
                             </FormControl>
@@ -127,7 +127,7 @@ class TodoFormImpl extends React.Component {
                         <Button onClick={() => this.setState({...initialState, open: true})} color="primary">
                             Clear
                         </Button>
-                        <Button onClick={this.handleSubmit} color="primary">
+                        <Button type="submit" onClick={this.handleSubmit} color="primary">
                             Add
                         </Button>
                     </DialogActions>
