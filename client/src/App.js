@@ -1,26 +1,31 @@
 import React, { Component } from 'react';
 import { Router } from '@reach/router'
-import { Provider } from 'react-redux';
+import { connect } from 'react-redux';
 import { NavBar } from './components/NavBar';
 import SignupPage from './containers/signup/SignupPage';
 import LoginPage from './containers/login/LoginPage';
-import { store } from './store';
+import TodoPage from './containers/todo/TodoPage';
 import './App.css';
 
 class App extends Component {
     render() {
         return (
-            <Provider store={store}>
-                <div className="App">
-                    <NavBar />
-                    <Router>
-                        <SignupPage path="signup" />
-                        <LoginPage path="login" />
-                    </Router>
-                </div>
-            </Provider>
+            <div className="App">
+                <NavBar user={this.props.user} />
+                <Router>
+                    <SignupPage path="signup" />
+                    <LoginPage path="login" />
+                    <TodoPage path="/" />
+                </Router>
+            </div>
         );
     }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+    return {
+        user: state.loginReducer.user,
+    }
+}
+
+export default App = connect(mapStateToProps)(App);

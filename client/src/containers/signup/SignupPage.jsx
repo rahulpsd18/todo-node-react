@@ -1,9 +1,10 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { CircularProgress, withStyles, Snackbar } from '@material-ui/core';
 import purple from '@material-ui/core/colors/purple';
-import SignupForm from './SignupForm';
+import { navigate } from '@reach/router';
+import { CircularProgress, withStyles, Snackbar } from '@material-ui/core';
+import { connect } from 'react-redux';
 import { signup } from '../../actions';
+import SignupForm from './SignupForm';
 
 const styles = theme => ({
     progress: {
@@ -12,6 +13,12 @@ const styles = theme => ({
 });
 
 class SignupPage extends React.Component {
+
+    componentDidUpdate() {
+        if (this.props.user) {
+            navigate('/');
+        }
+    }
 
     render() {
         const { updateStore, classes, loading, error } = this.props;

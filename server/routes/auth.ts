@@ -33,7 +33,7 @@ router.post('/signup', async (req: Request, res: Response) => {
 });
 
 router.post('/login', async (req: Request, res: Response) => {
-    const { email, password } = req.body;
+    let { email, password } = req.body;
 
     if (email && password) {
         const user = await User.findOne({ email: email.toLowerCase() }).select('+password').exec();
@@ -46,7 +46,8 @@ router.post('/login', async (req: Request, res: Response) => {
         if (passwordMatch) {
             const payload = { id: user.id };
             const token = jwt.sign(payload, process.env.JWT_SECRET as string, { expiresIn: '1d' });
-            res.json({ token: token });
+            delete user.password;
+            res.json({ token: token, user});
             return;
         }
 

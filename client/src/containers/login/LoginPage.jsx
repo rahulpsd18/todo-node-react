@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { navigate } from '@reach/router';
 import { CircularProgress, withStyles, Snackbar } from '@material-ui/core';
 import purple from '@material-ui/core/colors/purple';
 import LoginForm from './LoginForm';
@@ -12,6 +13,12 @@ const styles = theme => ({
 });
 
 class LoginPage extends React.Component {
+
+    componentDidUpdate() {
+        if (this.props.user) {
+            navigate('/');
+        }
+    }
 
     render() {
         const { updateStore, classes, loading, error } = this.props;
@@ -44,7 +51,8 @@ class LoginPage extends React.Component {
 const mapStateToProps = (state) => {
     return {
         loading: state.loginReducer.loading,
-        error: state.loginReducer.error
+        error: state.loginReducer.error,
+        user: state.loginReducer.user,
     }
 }
 

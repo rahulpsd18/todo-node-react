@@ -22,8 +22,16 @@ const styles = {
   },
 };
 
+const ActionLinks = () => {
+  return [
+    <Link key="login" to="/login"><Button color="secondary">Login</Button></Link>,
+    <Link key="signup" to="/signup"><Button color="secondary">Signup</Button></Link>
+  ]
+};
+
 const NavBarImpl = (props) => {
-  const { classes } = props;
+  const { classes, user } = props;
+
   return (
     <div className={classes.root}>
       <AppBar position="static">
@@ -34,8 +42,11 @@ const NavBarImpl = (props) => {
           <Typography variant="h6" color="inherit" className={classes.grow}>
             Toodle
           </Typography>
-          <Link to="/login"><Button color="secondary">Login</Button></Link>
-          <Link to="/signup"><Button color="secondary">Signup</Button></Link>
+          {
+            user
+              ? null
+              : <ActionLinks/>
+          }
         </Toolbar>
       </AppBar>
     </div>
