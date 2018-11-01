@@ -1,4 +1,5 @@
 import * as path from 'path';
+import * as cors from 'cors';
 import * as bodyParser from 'body-parser';
 import * as express from 'express';
 import * as passport from 'passport';
@@ -7,10 +8,14 @@ import router from './routes';
 
 type Request = express.Request;
 type Response = express.Response;
-type NextFunction = express.NextFunction;
 
 // Create Express server
 const app = express();
+
+app.use(cors({  
+    methods: ['GET', 'PUT', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URL as string, { useNewUrlParser: true })
@@ -21,21 +26,6 @@ mongoose.set('useCreateIndex', true);  // Added to silence the deprecation warni
 
 // Express configuration
 app.set('port', process.env.PORT || 3000);
-
-// Enabled CORS
-app.use(function (req: Request, res: Response, next: NextFunction) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-    next();
-});
-
-// Allow all options request to pass
-app.options('/*', function (req: Request, res: Response, next: NextFunction) {
-    res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,PATCH,DELETE,OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
-    res.sendStatus(200);
-});
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

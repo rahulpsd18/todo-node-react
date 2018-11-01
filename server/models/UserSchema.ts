@@ -11,7 +11,7 @@ interface IUserAttributes {
     tasks: ObjectId[];
 }
 
-// Ref: static and member model methods https://stackoverflow.com/a/45675548/1297190
+// This is the interface for an User instance
 export interface IUser extends IUserAttributes, mongoose.Document {
     id: ObjectId;
     tasks: ObjectId[] & ITask[];

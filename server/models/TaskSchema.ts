@@ -11,7 +11,7 @@ interface ITaskAttributes {
     priority: number;
 }
 
-// Ref: static and member model methods https://stackoverflow.com/a/45675548/1297190
+// This is the interface for a Task instance
 export interface ITask extends ITaskAttributes, mongoose.Document {
     id: ObjectId;
     user: ObjectId & IUser;
